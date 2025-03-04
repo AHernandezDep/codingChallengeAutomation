@@ -1,11 +1,13 @@
 # Coding Challenge Automation
 ## Resumen
-Se ha desarrollado un framework integral, con una arquitectura en capas, siguiendo buenas practicas de codificación, capaz de ejecutar automatizaciones tanto en backend (API's) como en interfaz de usuario (UI), proporcionando una solución versátil y eficiente para pruebas automatizadas. A continuación, se documenta el stack tecnológico utilizado en su implementación:
+Se ha desarrollado un framework integral, con una arquitectura en capas, siguiendo buenas practicas de codificación, capaz de ejecutar automatizaciones tanto en backend (API's) como en interfaz de usuario (UI), proporcionando una solución versátil y eficiente para pruebas automatizadas. A continuación, se documenta el stack tecnológico y patrones utilizados en su implementación:
 - Java
 - Maven
 - Rest Assured
 - TestNG
 - Cucumber (Gherkin)
+- POM (Page Object Moodel)
+- Arquitectura de tres capas (Feature - Steps - Services). Test Logic separada de Test Implementation.
 - Selenium WebDriver
 
 Además, se han implementado diferentes tipos de reportes para proporcionar una visualización clara y detallada de los resultados de las pruebas automatizadas. Estos reportes permiten un análisis exhaustivo, facilitando la identificación de fallos, la optimización de procesos y la toma de decisiones basada en datos precisos:
