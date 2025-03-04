@@ -16,10 +16,14 @@ Por otro lado, en este repositorio existe una coleccion de postman de nombre (*P
 
 ## Ejecutar Test Automation Suite 
 - Abrir IntelliJ IDEA.
-- Clonar repositorio de la rama *master*.
-- 
+- Instalar Java 15 y setearla al proyecto.
+- Instalar Apache Maven 3.9.9.
+- Clonar repositorio de la rama *main*. Nota: El proyecto de automation se encuentra bajo la carpeta: *automationChallenge*.
+- Esperar unos minutos hasta que el proyecto resuelva las depedencias necesarias e indexe la java version correspondiente.
+- Posicionado en la raiz del proyecto ejecutar el siguiente comando: *mvn clean install -U*. Debemos obtener BUILD SUCCESS.
+- Ir a TestRunner, indicar el TAG que se quiere ejecutar. Click derecho sobre la clase TestRunner y seleccionamos la opcion *Run 'TestRunner'*.
 
-El framework cuenta con un *TestRunner* el cual mediante la utilizacion de TestNG y Cucumber ejecutan la suit de test automatizados en base a lo que se necesite ejecutar. En este caso, utilizamos @TAGS en nuestros features para indicar los test que se quieren ejecutar. Se puede indicar un TAG en un Scenario en particular o tambien se puede crear un TAG a nivel de feature completo. El TAG se debe indicar bajo el parametro *tags* en las *@CucumberOptions* del archivo TestRunner, por ejemplo: *tags = @POKEMON*. Luego de indicar el TAG correspondiente, estamos en condiciones de ejecutar los test automatizados, para esto click derecho sobre la clase TestRunner y seleccionamos la opcion *Run 'TestRunner'*. Comenzará la ejecucion de la suite automatizada. 
+El framework cuenta con un *TestRunner* el cual mediante la utilizacion de TestNG y Cucumber ejecutan la suit de test automatizados en base a lo que se necesite ejecutar. En este caso, utilizamos @TAGS en nuestros features para indicar los test que se quieren ejecutar. Se puede indicar un TAG en un Scenario en particular o tambien se puede crear un TAG a nivel de feature completo. El TAG se debe indicar bajo el parametro *tags* en las *@CucumberOptions* del archivo TestRunner, por ejemplo: *tags = @POKEMON*. Luego de indicar el TAG correspondiente, estamos en condiciones de ejecutar los test automatizados desde nuestro TestRunner. Comenzará la ejecucion de la suite automatizada. 
 - Para los scenarios que se corresponden con API automation, se creo un TAG @POKEMON el cual ejecuta toda la suite de test automatizados. El feature se llama: *Pokemon.feature*.
 - Para los scenarios que se corresponden con UI automation, se creo un TAG @TOOLSSHOP el cual ejecuta toda la suite de test automatizados. El feature se llama: *ToolsShopDemo.feature*.
 
