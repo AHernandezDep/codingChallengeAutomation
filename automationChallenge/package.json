@@ -1,0 +1,11 @@
+{
+  "name": "api-test-framework",
+  "version": "1.0.0",
+  "description": "API Test Automation Framework using Cypress",
+  "dependencies": {
+    "cypress": "^12.0.0"
+  },
+  "scripts": {
+    "test": "cypress run"
+  }
+}

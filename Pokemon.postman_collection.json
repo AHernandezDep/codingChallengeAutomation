@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "35cae1a0-c048-4c7f-870b-14056b2379ed",
+		"name": "Pokemon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32425784"
+	},
+	"item": [
+		{
+			"name": "All Pokemon",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Convertir la respuesta en JSON\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//Obtener la cantidad total de Pokemons en la lista de resultados\r",
+							"var totalPokemon = jsonData.results.length;\r",
+							"\r",
+							"//Generar un numero aleatorio dentro del rango de la lista\r",
+							"var randomIndex = Math.floor(Math.random() * totalPokemon);\r",
+							"\r",
+							"//Obtener el nombre del Pokemon aleatorio\r",
+							"var randomPokemonName = jsonData.results[randomIndex].name;\r",
+							"\r",
+							"//Guardar el nombre en una variable de entorno\r",
+							"pm.environment.set(\"pokemon_name\", randomPokemonName);\r",
+							"\r",
+							"//Mostrar en la consola de Postman\r",
+							"console.log(\"Pokemon seleccionado aleatoriamente: \" + randomPokemonName);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokeapi.co/api/v2/pokemon",
+					"protocol": "https",
+					"host": [
+						"pokeapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"v2",
+						"pokemon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pokemon Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Convertir la respuesta en JSON\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//Verificar si el Pokemon tiene habilidades\r",
+							"if (jsonData.abilities && jsonData.abilities.length > 0) {\r",
+							"\r",
+							"    //Obtener la cantidad total de habilidades\r",
+							"    var totalAbilities = jsonData.abilities.length;\r",
+							"\r",
+							"    //Generar un indice aleatorio dentro del rango del array\r",
+							"    var randomIndex = Math.floor(Math.random() * totalAbilities);\r",
+							"\r",
+							"    //Obtener el nombre de la habilidad aleatoria\r",
+							"    var randomAbility = jsonData.abilities[randomIndex].ability.name;\r",
+							"\r",
+							"    //Guardar la habilidad en una variable de entorno\r",
+							"    pm.environment.set(\"pokemon_ability\", randomAbility);\r",
+							"\r",
+							"    //Mostrar en la consola de Postman la habilidad seleccionada\r",
+							"    console.log(\"Habilidad seleccionada aleatoriamente: \" + randomAbility);\r",
+							"} else {\r",
+							"    console.log(\"El Pokémon no tiene habilidades registradas.\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Verificar si la variable pokemon_name esta definida\r",
+							"if (!pm.environment.get(\"pokemon_name\")) {\r",
+							"    throw new Error(\"ERROR: Primero debes ejecutar el servicio de /api/v2/pokemon para obtener un Pokemon.\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokeapi.co/api/v2/pokemon/{{pokemon_name}}",
+					"protocol": "https",
+					"host": [
+						"pokeapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"v2",
+						"pokemon",
+						"{{pokemon_name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pokemon Abilities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Convertir la respuesta en JSON\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//Obtener el nombre de la habilidad desde la respuesta\r",
+							"var abilityName = jsonData.name;\r",
+							"\r",
+							"//Obtener la habilidad esperada (guardada en una variable previamente)\r",
+							"var expectedAbility = pm.environment.get(\"pokemon_ability\");\r",
+							"\r",
+							"//Validar que el nombre de la habilidad coincide con el esperado\r",
+							"pm.test(\"El nombre de la habilidad es correcto\", function () {\r",
+							"    pm.expect(abilityName).to.eql(expectedAbility);\r",
+							"});\r",
+							"\r",
+							"//Obtener el nombre del Pokemon guardado previamente\r",
+							"var expectedPokemon = pm.environment.get(\"pokemon_name\");\r",
+							"\r",
+							"//Verificar si el Pokemon esta en la lista de pokemons\r",
+							"var pokemonExists = jsonData.pokemon.some(p => p.pokemon.name === expectedPokemon);\r",
+							"\r",
+							"//Validar que el Pokemon buscado esta dentro del array de pokemons\r",
+							"pm.test(\"El Pokemon esta dentro de la lista de la habilidad\", function () {\r",
+							"    pm.expect(pokemonExists).to.be.true;\r",
+							"});\r",
+							"\r",
+							"//Mostrar en la consola de Postman\r",
+							"console.log(\"Habilidad esperada:\", expectedAbility);\r",
+							"console.log(\"Habilidad obtenida:\", abilityName);\r",
+							"console.log(\"Pokemon buscado:\", expectedPokemon);\r",
+							"console.log(\"¿Esta en la lista de Pokemon?:\", pokemonExists);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Verificar si la variable pokemon_name esta definida\r",
+							"if (!pm.environment.get(\"pokemon_name\")) {\r",
+							"    throw new Error(\"ERROR: Primero debes ejecutar el servicio de /api/v2/pokemon para obtener un Pokemon.\");\r",
+							"}\r",
+							"\r",
+							"//Verificar si la variable pokemon_ability esta definida\r",
+							"if (!pm.environment.get(\"pokemon_ability\")) {\r",
+							"    throw new Error(\"ERROR: Primero debes ejecutar el servicio de api/v2/pokemon/{{pokemon_name}} para obtener la informacion del Pokemon.\");\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokeapi.co/api/v2/ability/{{pokemon_ability}}",
+					"protocol": "https",
+					"host": [
+						"pokeapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"v2",
+						"ability",
+						"{{pokemon_ability}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

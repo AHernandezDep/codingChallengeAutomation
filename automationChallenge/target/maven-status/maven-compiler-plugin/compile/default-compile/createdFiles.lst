@@ -1,0 +1,5 @@
+services\PokemonServices.class
+steps\ToolsShopDemoSteps.class
+steps\PokemonSteps.class
+utils\BaseTest.class
+pages\ToolsShopDemoPage.class
